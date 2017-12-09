@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain;
 use App\Page;
+use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -131,11 +132,18 @@ class DomainsController extends Controller
     {
         //
         $finddomain = Domain::find($domain_id);
-        Page::where("domain_id",$finddomain->id)->delete();
-
-        if($finddomain->delete())
-            return ' { result : 1 } ';
-        else
-            return ' { result : -1 } ';
+        if($finddomain) {
+            $findPages = Page::where("domain_id", $finddomain->id)->get();
+            foreach($findPages as $findPage)
+            {
+                Post::where("page_id", $findPage->id)->delete();
+                $findPage->delete();
+            }
+            //Page::where("domain_id", $finddomain->id)->delete();
+            if ($finddomain->delete())
+                return ' { result : 1 } ';
+            else
+                return ' { result : -1 } ';
+        }
     }
 }

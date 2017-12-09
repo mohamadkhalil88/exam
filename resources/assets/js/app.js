@@ -35,7 +35,7 @@ Vue.component('domains-component', {
             //this.parsed_domains.$remove(domain);
             var index = this.parsed_domains.indexOf(domain);
             Vue.delete(this.parsed_domains, index);
-            $.getJSON('/api/domain/delete/'+id);
+            $.getJSON('/api/domains/delete/'+id );
         }
     }
 });
@@ -88,13 +88,42 @@ Vue.component('pages-component', {
             if(!confirm("Are you sure you want to delete?"))
                 return false;
             //this.parsed_domains.$remove(domain);
-            var index = this.parsed_pages.indexOf(domain);
+            var index = this.parsed_pages.indexOf(page);
             Vue.delete(this.parsed_pages, index);
             $.getJSON('/api/pages/delete/'+id);
         }
     }
 });
 
+Vue.component('form-page-component', {
+    template: '#form-page-template',
+    props: ['page' , 'domains'],
+    data: function() {
+        return {
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    },
+    created: function () {
+        // `this` points to the vm instance.
+        this.parsed_page = JSON.parse(this.page); //the returned data after a fail save
+        this.parsed_domains = JSON.parse(this.domains);
+    }
+});
+
+Vue.component('form-page-create-component', {
+    template: '#form-page-create-template',
+    data: function() {
+        return {
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    },
+    props: ['page' , 'domains'],
+    created: function () {
+        // `this` points to the vm instance.
+        this.parsed_page = JSON.parse(this.page); //the returned data after a fail save
+        this.parsed_domains = JSON.parse(this.domains);
+    }
+});
 
 const app = new Vue({
     el: '#app'

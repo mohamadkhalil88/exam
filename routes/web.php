@@ -19,8 +19,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware(["auth"])->group(function() {
-    Route::get('/api/domain/delete/{domain_id?}', 'DomainsController@destroy');
+    Route::get('/api/domains/delete/{domain_id?}', 'DomainsController@destroy');
+    Route::get('/api/pages/delete/{page_id?}', 'PagesController@destroy');
+
     Route::resource("domains", "DomainsController");
     Route::resource("pages", "PagesController");
+    Route::get('/domain/pages/{domain_id}', 'PagesController@index');
     //Route::resource("posts", "PostsController");
 });

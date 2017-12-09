@@ -15,7 +15,7 @@
                                 @{{ domain.domain_name }}
                                 <a class="btn btn-danger btn-sm pull-right" href="#" role="button" @click="deleteDomain(domain , domain.id)">Delete</a>
                                 <a  class="btn btn-primary btn-sm pull-right" v-bind:href="'/domains/'+domain.id+'/edit'" role="button" style="margin-right: 5px;">Edit</a>
-                                <a  class="btn btn-success btn-sm pull-right" role="button" style="margin-right: 5px;">Pages</a>
+                                <a  class="btn btn-success btn-sm pull-right" v-bind:href="'/domain/pages/'+domain.id" role="button" style="margin-right: 5px;">Pages</a>
                             </li>
                         </ul>
                     </div>

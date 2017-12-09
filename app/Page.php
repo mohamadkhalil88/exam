@@ -15,6 +15,8 @@ class Page extends Model
         "page_category",
         "page_area",
         "page_freq",
+        "page_next_time",
+        "page_last_time",
         "domain_id"
     ];
 
