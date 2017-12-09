@@ -9,6 +9,11 @@
                         I'm an example component!
                     </div>
                 </div>
+                <ul class="list-group">
+                    <li class="list-group-item" v-for="domain in parsed_domains">
+                        @{{ domain.domain_name }}
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

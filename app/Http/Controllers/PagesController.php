@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Page;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
@@ -15,6 +16,13 @@ class PagesController extends Controller
     public function index()
     {
         //
+        //
+        if (Auth::check())
+        {
+            $pages = Page::all();
+            return view("pages.index", ["pages" => $pages]);
+        }
+        return view("auth.login");
     }
 
     /**
