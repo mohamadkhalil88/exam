@@ -7,6 +7,9 @@ use App\Page;
 use App\Post;
 use Cron\CronExpression;
 use App\MyClasses\Scrap;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
+
 
 class GetNextPages extends Command
 {
@@ -75,13 +78,13 @@ class GetNextPages extends Command
                         $post_description = $obj::getMeta('description');
                         $post_image = $obj::getImg();
                         //Store them in database
-                        Post::create([
+                        $post = Post::create([
                             "post_title"=>$post_title,
                             "post_image"=>$post_image,
                             "post_body"=>$post_description,
                             "page_id"=>$nextPage->id
                         ]);
-
+                        Redis::set("posts",serialize($post));
                     }else{
 
                     }
@@ -93,7 +96,7 @@ class GetNextPages extends Command
             $nextObj = $cron->getNextRunDate();
             $next_time = date("Y-m-d H:i:s",$nextObj->getTimestamp());
             $nextPage->update([
-                "page_next_time"=>$next_time,
+                //"page_next_time"=>$next_time,
                 "page_last_time"=>$now
             ]);
         }
