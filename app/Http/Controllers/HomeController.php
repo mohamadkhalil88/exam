@@ -37,7 +37,6 @@ class HomeController extends Controller
         $language->getSyntax();
         $language->getSentiment();
         */
-        
         return view('home');
     }
 

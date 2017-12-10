@@ -96,7 +96,7 @@ class GetNextPages extends Command
             $nextObj = $cron->getNextRunDate();
             $next_time = date("Y-m-d H:i:s",$nextObj->getTimestamp());
             $nextPage->update([
-                //"page_next_time"=>$next_time,
+                "page_next_time"=>$next_time,
                 "page_last_time"=>$now
             ]);
         }
