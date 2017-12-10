@@ -7,7 +7,7 @@ use App\Page;
 use App\Post;
 use Cron\CronExpression;
 use App\MyClasses\Scrap;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 
 
