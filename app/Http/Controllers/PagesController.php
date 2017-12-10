@@ -151,13 +151,15 @@ class PagesController extends Controller
     public function destroy(Page $page,$page_id = null)
     {
         //
-        $findPage = Page::find($page_id);
-        if($findPage) {
-            Post::where("page_id", $findPage->id)->delete();
-            if ($findPage->delete())
-                return ' { result : 1 } ';
-            else
-                return ' { result : -1 } ';
+        if (Auth::check()) {
+            $findPage = Page::find($page_id);
+            if ($findPage) {
+                Post::where("page_id", $findPage->id)->delete();
+                if ($findPage->delete())
+                    return ' { result : 1 } ';
+                else
+                    return ' { result : -1 } ';
+            }
         }
     }
 

@@ -97,7 +97,7 @@ class Event
      *
      * @var string
      */
-    public $output = '/dev/null';
+    public $output = 'NUL 2>&1';///dev/null changed because i am using windows
 
     /**
      * Indicates whether output should be appended.

@@ -51,8 +51,8 @@ class DomainsController extends Controller
         if(Auth::check())
         {
             //check if domain exist
-            $domainCheck = Domain::where("domain_name",$request->input("domain_name"));
-            if(!$domainCheck) {
+            $domainCheck = Domain::where("domain_name",$request->input("domain_name"))->get();
+            if(count($domainCheck) == 0) {
                 $domain = Domain::create([
                     "domain_name" => $request->input("domain_name"),
                     "domain_link" => $request->input("domain_link"),
@@ -131,19 +131,20 @@ class DomainsController extends Controller
     public function destroy(Domain $domain,$domain_id = null)
     {
         //
-        $finddomain = Domain::find($domain_id);
-        if($finddomain) {
-            $findPages = Page::where("domain_id", $finddomain->id)->get();
-            foreach($findPages as $findPage)
-            {
-                Post::where("page_id", $findPage->id)->delete();
-                $findPage->delete();
+        if (Auth::check()) {
+            $finddomain = Domain::find($domain_id);
+            if ($finddomain) {
+                $findPages = Page::where("domain_id", $finddomain->id)->get();
+                foreach ($findPages as $findPage) {
+                    Post::where("page_id", $findPage->id)->delete();
+                    $findPage->delete();
+                }
+                //Page::where("domain_id", $finddomain->id)->delete();
+                if ($finddomain->delete())
+                    return ' { result : 1 } ';
+                else
+                    return ' { result : -1 } ';
             }
-            //Page::where("domain_id", $finddomain->id)->delete();
-            if ($finddomain->delete())
-                return ' { result : 1 } ';
-            else
-                return ' { result : -1 } ';
         }
     }
 }
